@@ -101,3 +101,36 @@ Selamat datang di repositori **Aplikasi CRUD dan Assessment Penerima Bantuan Sos
 ├── .env
 ├── composer.json
 └── package.json
+
+##🔥 Diagram ERD (Entity Relationship Diagram)
+##👉 Deskripsi Relasi:
+Tabel penerima_bantuan
+
+Menyimpan data master penerima.
+
+Tabel assessment_penerima
+
+Menyimpan hasil penilaian dengan foreign key ke penerima_bantuan.
+
+##👉 Diagram ERD-nya:
+scss
+Copy
+Edit
+┌─────────────────────────────┐            ┌────────────────────────────────┐
+│       penerima_bantuan       │            │        assessment_penerima     │
+├─────────────────────────────┤            ├────────────────────────────────┤
+│ id (PK)                     │◄───────────│ penerima_id (FK)               │
+│ nik                          │            │ id (PK)                        │
+│ nama                         │            │ pendapatan_bulanan             │
+│ tanggal_lahir                │            │ jumlah_tanggungan              │
+│ jenis_kelamin                │            │ kondisi_rumah                  │
+│ alamat                       │            │ skor_kelayakan                 │
+│ status_bantuan               │            │ kategori_kelayakan             │
+│ created_at                   │            │ catatan                        │
+│ updated_at                   │            │ tanggal_penilaian              │
+└─────────────────────────────┘            │ created_at                     │
+                                            │ updated_at                     │
+                                            └────────────────────────────────┘
+Relasi:
+
+penerima_bantuan.id 🔗 assessment_penerima.penerima_id (One to Many)
