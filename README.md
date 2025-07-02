@@ -1,61 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aplikasi CRUD dan Assessment Penerima Bantuan Sosial
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Dibuat oleh: Fuad Khasani (STI202202678)
 
-## About Laravel
+## 👋 Selamat Datang
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Selamat datang di repositori **Aplikasi CRUD dan Assessment Penerima Bantuan Sosial**. Aplikasi ini dibangun menggunakan **Laravel 12** untuk membantu proses pendataan dan penilaian kelayakan penerima bantuan sosial. Sistem ini mempermudah input data penerima, melakukan penilaian otomatis berdasarkan kriteria tertentu, serta memfilter data sesuai kebutuhan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Fitur Utama
 
-## Learning Laravel
+- CRUD data penerima bantuan.
+- Sistem penilaian kelayakan otomatis berdasarkan:
+  - **Pendapatan bulanan**
+  - **Jumlah tanggungan**
+  - **Kondisi rumah**
+- Kategori kelayakan: 
+  - `Sangat Layak`, `Layak`, `Kurang Layak`, `Tidak Layak`
+- Filtering data berdasarkan hasil penilaian.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🔢 Logika Penilaian
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| **Kriteria**         | **Poin**                              |
+|----------------------|---------------------------------------|
+| **Pendapatan**       | ≤1.000.000 = 40, 1-2jt = 20, >2jt = 0 |
+| **Tanggungan**       | ≥5 = 30, 3-4 = 15, <3 = 0             |
+| **Kondisi Rumah**    | Tidak Layak = 30, Kurang = 15, Layak = 0 |
 
-## Laravel Sponsors
+**Kategori Kelayakan:**
+- **80-100** → Sangat Layak
+- **50-79** → Layak
+- **20-49** → Kurang Layak
+- **0-19**  → Tidak Layak
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🗄️ Skema Database
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. **Tabel penerima_bantuan**
+| Kolom           | Tipe           | Keterangan                |
+|-----------------|-----------------|---------------------------|
+| id              | BigInt (PK)     | Auto increment            |
+| nik             | String(16)      | Unique, NIK               |
+| nama            | String(255)     | Nama penerima             |
+| tanggal_lahir   | Date            |                           |
+| jenis_kelamin   | Enum            | Laki-laki / Perempuan     |
+| alamat          | Text            |                           |
+| status_bantuan  | Enum            | Aktif / Tidak Aktif       |
+| created_at      | Timestamp       |                           |
+| updated_at      | Timestamp       |                           |
 
-## Contributing
+### 2. **Tabel assessment_penerima**
+| Kolom               | Tipe             | Keterangan                    |
+|---------------------|------------------|-------------------------------|
+| id                  | BigInt (PK)      | Auto increment                |
+| penerima_id         | Foreign Key      | Relasi ke penerima_bantuan    |
+| pendapatan_bulanan  | Decimal(15,2)    |                               |
+| jumlah_tanggungan   | Integer          |                               |
+| kondisi_rumah       | Enum             | Layak, Kurang Layak, Tidak Layak |
+| skor_kelayakan      | Integer          | 0 - 100                       |
+| kategori_kelayakan  | Enum             | Sangat Layak, Layak, dst.     |
+| catatan             | Text (nullable)  |                               |
+| tanggal_penilaian   | Date             |                               |
+| created_at          | Timestamp        |                               |
+| updated_at          | Timestamp        |                               |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Relasi:**  
+`penerima_bantuan (1)` → `assessment_penerima (N)`
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📁 Struktur Folder
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```plaintext
+.
+├── app
+│   ├── Http
+│   │   └── Controllers
+│   │       ├── PenerimaBantuanController.php
+│   │       └── AssessmentPenerimaController.php
+│   └── Models
+│       ├── PenerimaBantuan.php
+│       └── AssessmentPenerima.php
+├── database
+│   └── migrations
+├── public
+├── resources
+│   └── views
+│       ├── penerima
+│       │   ├── index.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   └── show.blade.php
+│       └── assessment
+│           └── create.blade.php
+├── routes
+│   └── web.php
+├── .env
+├── composer.json
+└── package.json
