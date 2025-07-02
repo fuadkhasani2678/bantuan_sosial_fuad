@@ -2,15 +2,12 @@
 
 ## 📌 Dibuat oleh: Fuad Khasani (STI202202678)
 
-![Thumbnail](./thumbnail.png)
-
----
-
 ## 👋 Selamat Datang
 
 Selamat datang di repositori **Aplikasi CRUD dan Assessment Penerima Bantuan Sosial**. Aplikasi ini dibangun menggunakan **Laravel 12** untuk membantu proses pendataan dan penilaian kelayakan penerima bantuan sosial. Sistem ini mempermudah input data penerima, melakukan penilaian otomatis berdasarkan kriteria tertentu, serta memfilter data sesuai kebutuhan.
-
----
+<p align="center">
+  <img src="./thumbnail.png" alt="Thumbnail" width="400"/>
+</p>
 
 ## 🚀 Fitur Utama
 
